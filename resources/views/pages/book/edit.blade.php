@@ -49,8 +49,9 @@
             @endif
 
             <!-- Create Post Form -->
-            <form action="/book" method="POST">
+            <form action="{{ route('update', $book->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method("put")
                 <div class="row">
                     <div class="col-md-6">
                         <label for="" class="form-label">
@@ -94,7 +95,7 @@
                         </label>
                         <select class="form-select" aria-label="Default select example" name="category_id">
                             @foreach ($kategori as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option {{ $item->id === $book->category_id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>

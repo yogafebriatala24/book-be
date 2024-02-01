@@ -28,3 +28,4 @@ Route::get('/book', [BookController::class, "index"]);
 Route::post('/book', [BookController::class, "store"]);
 Route::delete('/book/{title}', [BookController::class, "destroy"]);
 Route::get('/book/{id}/edit', [BookController::class, "edit"]) -> name('edit');
+Route::put('/book/{id}', [BookController::class, "update"]) -> name('update');

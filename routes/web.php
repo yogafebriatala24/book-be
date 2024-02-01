@@ -27,5 +27,5 @@ Route::put('/categories/{id}', [CategoryController::class, "update"]) -> name('u
 Route::get('/books', [BookController::class, "index"]);
 Route::post('/books', [BookController::class, "store"]);
 Route::delete('/books/{title}', [BookController::class, "destroy"]);
-Route::get('/books/{id}/edit', [BookController::class, "edit"]) -> name('edit');
+Route::get('/books/{id}', [BookController::class, "edit"]) -> name('edit');
 Route::put('/books/{id}', [BookController::class, "update"]) -> name('update');

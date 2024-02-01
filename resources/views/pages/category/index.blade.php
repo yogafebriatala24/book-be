@@ -19,7 +19,7 @@
           <a class="nav-link active" aria-current="page" href="/categories">Kategori</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/book">Book</a>
+          <a class="nav-link active" aria-current="page" href="/books">Book</a>
         </li>
       </ul>
     </div>
@@ -32,6 +32,18 @@
             </div>
         @endif
         <div class="my-4">
+
+            <h2>Tambah Kategori</h2>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="/categories" method="POST">
                 @csrf
                 <div class="row">

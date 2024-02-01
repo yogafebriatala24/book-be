@@ -14,7 +14,7 @@ class BookController extends Controller
         $data = Book::get();
         $kategori = Category::get();
 
-        return view('pages.book.index', [
+        return view('pages.books.index', [
             'data' => $data,
             'kategori' => $kategori,
         ]);
@@ -78,7 +78,7 @@ class BookController extends Controller
         $book = Book::find($id);
         $kategori = Category::get();
 
-        return view('pages.book.edit', [
+        return view('pages.books.edit', [
             'book' => $book,
             'kategori' => $kategori,
         ]);
@@ -122,7 +122,7 @@ class BookController extends Controller
 
         $inserData = $book->update($formData);
 
-        return redirect('/book')
+        return redirect('/books')
             ->with('success', 'Tambah data kategori berhasil');
     }
 }

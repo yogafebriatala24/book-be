@@ -23,7 +23,7 @@
                             <a class="nav-link active" aria-current="page" href="/categories">Kategori</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/book">Book</a>
+                            <a class="nav-link active" aria-current="page" href="/books">Book</a>
                         </li>
                     </ul>
                 </div>
@@ -36,9 +36,9 @@
             </div>
         @endif
         <div class="my-4">
-            <!-- /resources/views/post/create.blade.php -->
+            
 
-            <h1>Tambah Buku</h1>
+            <h2>Tambah Buku</h2>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -50,7 +50,6 @@
                 </div>
             @endif
 
-            <!-- Create Post Form -->
             <form action="/book" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">

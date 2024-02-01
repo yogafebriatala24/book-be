@@ -14,7 +14,7 @@ class BookController extends Controller
         $data = Book::get();
         $kategori = Category::get();
 
-        return view('pages.books.index', [
+        return view('pages.book.index', [
             'data' => $data,
             'kategori' => $kategori,
         ]);

@@ -11,22 +11,36 @@
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button data-mdb-collapse-init class="navbar-toggler" type="button"
+                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/categories">Kategori</a>
+                            <a class="nav-link" href="/books">Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/books">Book</a>
+                            <a class="nav-link" href="/categories">Kategori</a>
                         </li>
                     </ul>
                 </div>
+                <div class="d-flex align-items-center">
+                    <a class="text-reset me-3" href="#">
+                        <i class="fas fa-shopping-cart">Selamat Datang {{ auth()->user()->name }}</i>
+                    </a>
+                    <div class="div">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <input type="submit" class="btn btn-danger" value="Logout">
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </nav>
 
@@ -36,7 +50,7 @@
             </div>
         @endif
         <div class="my-4">
-            
+
 
             <h2>Tambah Buku</h2>
 
@@ -150,7 +164,8 @@
                                 {{ $item->description }}
                             </td>
                             <td>
-                                <img src="{{ asset('storage/'.$item->image_url) }}" style= "width: 50px; height: 50px; object-fit: 'cover'">
+                                <img src="{{ asset('storage/' . $item->image_url) }}"
+                                    style= "width: 50px; height: 50px; object-fit: 'cover'">
                             </td>
                             <td>
                                 {{ $item->release_year }}
@@ -168,13 +183,13 @@
                                 {{ $item->category->name }}
                             </td>
                             <td>
-                               <div class="d-flex">
+                                <div class="d-flex">
                                     <a href="{{ route('edit', $item->id) }}" class="btn btn-primary">
                                         Edit
                                     </a>
                                     <form action="/book/{{ $item->id }}" method="post">
                                         @csrf
-                                        @method("DELETE")
+                                        @method('DELETE')
                                         <button class="btn btn-danger ms-3">Hapus</button>
                                     </form>
                                 </div>

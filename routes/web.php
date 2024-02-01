@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::get('/categories', [CategoryController::class, "index"]);
 Route::post('/categories', [CategoryController::class, "store"]);
 Route::delete('/categories/{id}', [CategoryController::class, "destroy"]);
-Route::get('/categories/{id}/edit', [CategoryController::class, "edit"]) -> name('edit');
+Route::get('/categories/{id}', [CategoryController::class, "edit"]) -> name('editcategories');
 Route::put('/categories/{id}', [CategoryController::class, "update"]) -> name('update');
 Route::get('/books', [BookController::class, "index"]);
 Route::post('/books', [BookController::class, "store"]);

@@ -80,7 +80,7 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ route('edit', $item->id) }}" class="btn btn-primary">
+                                    <a href="{{ route('editcategories', $item->id) }}" class="btn btn-primary">
                                         Edit
                                     </a>
                                     <form action="/categories/{{ $item->id }}" method="post">

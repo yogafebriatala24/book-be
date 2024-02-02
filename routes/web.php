@@ -32,18 +32,18 @@ Route::post('/logout', function () {
         ->session()
         ->regenerateToken();
 
-    return redirect('/login');
+    return redirect('/books');
 })->name('logout');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 
-Route::get('/categories', [CategoryController::class, 'index'])->middleware('guest');
-Route::post('/categories', [CategoryController::class, 'store']);
-Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
-Route::get('/categories/{id}', [CategoryController::class, 'edit'])->name('editcategories');
-Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('update');
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store'])->middleware('auth');
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->middleware('auth');
+Route::get('/categories/{id}', [CategoryController::class, 'edit'])->name('editcategories')->middleware('auth');
+Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('update')->middleware('auth');
 Route::get('/books', [BookController::class, 'index']);
-Route::post('/books', [BookController::class, 'store']);
-Route::delete('/books/{title}', [BookController::class, 'destroy']);
-Route::get('/books/{id}', [BookController::class, 'edit'])->name('edit');
-Route::put('/books/{id}', [BookController::class, 'update'])->name('update');
+Route::post('/books', [BookController::class, 'store'])->middleware('auth');
+Route::delete('/books/{title}', [BookController::class, 'destroy'])->middleware('auth');
+Route::get('/books/{id}', [BookController::class, 'edit'])->name('edit')->middleware('auth');
+Route::put('/books/{id}', [BookController::class, 'update'])->name('update')->middleware('auth');

@@ -22,25 +22,28 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/books">Book</a>
+                            <a class="nav-link active text-bold" href="/books">Book</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/categories">Kategori</a>
                         </li>
                     </ul>
                 </div>
-                <div class="d-flex align-items-center">
-                    <a class="text-reset me-3" href="#">
-                        <i class="fas fa-shopping-cart">Selamat Datang {{ auth()->user()->name }}</i>
-                    </a>
-                    <div class="div">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <input type="submit" class="btn btn-danger" value="Logout">
-                        </form>
+                @if (!Auth::guest())
+                    <div class="d-flex align-items-center">
+                        <a class="text-reset me-3" href="#">
+                            <i class="fas fa-shopping-cart">Selamat Datang {{ auth()->user()->name }}</i>
+                        </a>
+                        <div class="div">
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <input type="submit" class="btn btn-danger" value="Logout">
+                            </form>
+                        </div>
                     </div>
-                </div>
-
+                @else
+                    <a href="/login" class="btn btn-primary">Login</a>
+                @endif
             </div>
         </nav>
 
@@ -52,7 +55,11 @@
         <div class="my-4">
 
 
-            <h2>Tambah Buku</h2>
+            @if (!Auth::guest())
+                <h2>Tambah Buku</h2>
+            @else
+                <h2>List Buku</h2>
+            @endif
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -64,62 +71,65 @@
                 </div>
             @endif
 
-            <form action="/book" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="" class="form-label">
-                            Judul
-                        </label>
-                        <input type="text" class="form-control" name="title" placeholder="Judul Buku">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="" class="form-label">
-                            Dekripsi Buku
-                        </label>
-                        <input type="text" class="form-control" name="description" placeholder="Deksripsi Buku">
-                    </div>
-                    <div class="col-md-6 mt-4">
-                        <label for="" class="form-label">
-                            Gambar
-                        </label>
-                        <input type="file" class="form-control" name="image_url">
-                    </div>
-                    <div class="col-md-6 mt-4">
-                        <label for="" class="form-label">
-                            Tahun Rilis
-                        </label>
-                        <input type="number" min="1980" max="2021" class="form-control" name="release_year">
-                    </div>
-                    <div class="col-md-6 mt-4">
-                        <label for="" class="form-label">
-                            Harga
-                        </label>
-                        <input type="number" class="form-control" name="price">
-                    </div>
-                    <div class="col-md-6 mt-4">
-                        <label for="" class="form-label">
-                            Total Halaman
-                        </label>
-                        <input type="number" class="form-control" name="total_page">
-                    </div>
-                    <div class="col-md mt-4">
-                        <label for="" class="form-label">
-                            Kategori
-                        </label>
-                        <select class="form-select" aria-label="Default select example" name="category_id">
-                            @foreach ($kategori as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+            @if (!Auth::guest())
+                <form action="/book" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="" class="form-label">
+                                Judul
+                            </label>
+                            <input type="text" class="form-control" name="title" placeholder="Judul Buku">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label">
+                                Dekripsi Buku
+                            </label>
+                            <input type="text" class="form-control" name="description" placeholder="Deksripsi Buku">
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <label for="" class="form-label">
+                                Gambar
+                            </label>
+                            <input type="file" class="form-control" name="image_url">
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <label for="" class="form-label">
+                                Tahun Rilis
+                            </label>
+                            <input type="number" min="1980" max="2021" class="form-control"
+                                name="release_year">
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <label for="" class="form-label">
+                                Harga
+                            </label>
+                            <input type="number" class="form-control" name="price">
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <label for="" class="form-label">
+                                Total Halaman
+                            </label>
+                            <input type="number" class="form-control" name="total_page">
+                        </div>
+                        <div class="col-md mt-4">
+                            <label for="" class="form-label">
+                                Kategori
+                            </label>
+                            <select class="form-select" aria-label="Default select example" name="category_id">
+                                @foreach ($kategori as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
 
-                    <div class="col-12 mt-3">
-                        <button class="btn btn-primary" type="submit">Tambah Buku Baru</button>
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary" type="submit">Tambah Buku Baru</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @endif
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -183,16 +193,20 @@
                                 {{ $item->category->name }}
                             </td>
                             <td>
-                                <div class="d-flex">
-                                    <a href="{{ route('edit', $item->id) }}" class="btn btn-primary">
-                                        Edit
-                                    </a>
-                                    <form action="/book/{{ $item->id }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger ms-3">Hapus</button>
-                                    </form>
-                                </div>
+                                @if (!Auth::guest())
+                                    <div class="d-flex">
+                                        <a href="{{ route('edit', $item->id) }}" class="btn btn-primary">
+                                            Edit
+                                        </a>
+                                        <form action="/book/{{ $item->id }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger ms-3">Hapus</button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <a href="/login" class="btn btn-primary">Login</a>
+                                @endif
                             </td>
                         </tr>
                     @empty

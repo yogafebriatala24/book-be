@@ -25,22 +25,32 @@
                             <a class="nav-link" href="/books">Book</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/categories">Kategori</a>
+                            <a class="nav-link active" href="/categories">Kategori</a>
                         </li>
                     </ul>
                 </div>
-                <div class="d-flex align-items-center">
-                    <a class="text-reset me-3" href="#">
-                        <i class="fas fa-shopping-cart">Selamat Datang {{ auth()->user()->name }}</i>
-                    </a>
-                    <div class="div">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <input type="submit" class="btn btn-danger" value="Logout">
-                        </form>
+                @if (!Auth::guest())
+                    <div class="d-flex align-items-center">
+                        <a class="text-reset me-3" href="#">
+                            <i class="fas fa-shopping-cart">Selamat Datang {{ auth()->user()->name }}</i>
+                        </a>
+                        <div class="div">
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <input type="submit" class="btn btn-danger" value="Logout">
+                            </form>
+                        </div>
                     </div>
-                </div>
-
+                    @else
+                    <div class="d-flex align-items-center">
+                        <a class="text-reset me-3" href="#">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                        <div class="div">
+                            <a href="/login" class="btn btn-primary">Login</a>
+                        </div>
+                    </div>
+                @endif
             </div>
         </nav>
 
@@ -50,8 +60,12 @@
             </div>
         @endif
         <div class="my-4">
+            @if (!Auth::guest())
+                <h2>Tambah Kategori</h2>
+            @else
+                <h2>List Kategori</h2>
+            @endif
 
-            <h2>Tambah Kategori</h2>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -62,21 +76,23 @@
                     </ul>
                 </div>
             @endif
-            <form action="/categories" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="" class="form-label">
-                            Nama Kategori Baru
-                        </label>
-                        <input type="text" class="form-control" name="name" placeholder="Kategori baru">
-                    </div>
+            @if (!Auth::guest())
+                <form action="/categories" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="" class="form-label">
+                                Nama Kategori Baru
+                            </label>
+                            <input type="text" class="form-control" name="name" placeholder="Kategori baru">
+                        </div>
 
-                    <div class="col-12 mt-3">
-                        <button class="btn btn-primary" type="submit">Tambah Data Baru</button>
+                        <div class="col-12 mt-3">
+                            <button class="btn btn-primary" type="submit">Tambah Data Baru</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @endif
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -97,16 +113,20 @@
                                 {{ $item->name }}
                             </td>
                             <td>
-                                <div class="d-flex">
-                                    <a href="{{ route('editcategories', $item->id) }}" class="btn btn-primary">
-                                        Edit
-                                    </a>
-                                    <form action="/categories/{{ $item->id }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger ms-3">Hapus</button>
-                                    </form>
-                                </div>
+                                @if (!Auth::guest())
+                                    <div class="d-flex">
+                                        <a href="{{ route('editcategories', $item->id) }}" class="btn btn-primary">
+                                            Edit
+                                        </a>
+                                        <form action="/categories/{{ $item->id }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger ms-3">Hapus</button>
+                                        </form>
+                                    </div>
+                                    @else
+                                    <a href="/login" class="btn btn-primary">Login</a>
+                                @endif
                             </td>
                         </tr>
                     @empty

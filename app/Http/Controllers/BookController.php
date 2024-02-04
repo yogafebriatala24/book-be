@@ -11,11 +11,32 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Book::get();
+        $title = $request->title;
+        $sortByTitle = $request->sortByTitle;
+        $minYear = $request->minYear;
+        $maxYear = $request->maxYear;
+
+        $data = Book::query();
         $kategori = Category::get();
 
+        if ($title) {
+            $data->where("title", "LIKE", "%$title%");
+        }
+
+        if ($sortByTitle) {
+            $data->orderBy("title", $sortByTitle);
+        }
+
+        if ($minYear) {
+            $data->where("release_year", ">=", $minYear);
+        }
+        if ($maxYear) {
+            $data->where("release_year", "<=", $maxYear);
+        }
+
+
         return view('pages.book.index', [
-            'data' => $data,
+            'data' => $data->get(),
             'kategori' => $kategori,
         ]);
     }

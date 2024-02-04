@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kategori</title>
+    <title>Books</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -72,64 +73,99 @@
             @endif
 
             @if (!Auth::guest())
-                <form action="/book" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="" class="form-label">
-                                Judul
-                            </label>
-                            <input type="text" class="form-control" name="title" placeholder="Judul Buku">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="" class="form-label">
-                                Dekripsi Buku
-                            </label>
-                            <input type="text" class="form-control" name="description" placeholder="Deksripsi Buku">
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <label for="" class="form-label">
-                                Gambar
-                            </label>
-                            <input type="file" class="form-control" name="image_url">
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <label for="" class="form-label">
-                                Tahun Rilis
-                            </label>
-                            <input type="number" min="1980" max="2021" class="form-control"
-                                name="release_year">
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <label for="" class="form-label">
-                                Harga
-                            </label>
-                            <input type="number" class="form-control" name="price">
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <label for="" class="form-label">
-                                Total Halaman
-                            </label>
-                            <input type="number" class="form-control" name="total_page">
-                        </div>
-                        <div class="col-md mt-4">
-                            <label for="" class="form-label">
-                                Kategori
-                            </label>
-                            <select class="form-select" aria-label="Default select example" name="category_id">
-                                @foreach ($kategori as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                <div class="modal fade" id="modalAddBuku" tabindex="-1" aria-labelledby="modalAddBukuLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="modalAddBukuLabel">Form Tambah Buku Baru</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/books" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">
+                                                Judul
+                                            </label>
+                                            <input type="text" class="form-control" name="title"
+                                                placeholder="Judul Buku">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="" class="form-label">
+                                                Dekripsi Buku
+                                            </label>
+                                            <input type="text" class="form-control" name="description"
+                                                placeholder="Deksripsi Buku">
+                                        </div>
+                                        <div class="col-md-6 mt-4">
+                                            <label for="" class="form-label">
+                                                Gambar
+                                            </label>
+                                            <input type="file" class="form-control" name="image_url">
+                                        </div>
+                                        <div class="col-md-6 mt-4">
+                                            <label for="" class="form-label">
+                                                Tahun Rilis
+                                            </label>
+                                            <input type="number" min="1980" max="2021" class="form-control"
+                                                name="release_year">
+                                        </div>
+                                        <div class="col-md-6 mt-4">
+                                            <label for="" class="form-label">
+                                                Harga
+                                            </label>
+                                            <input type="number" class="form-control" name="price">
+                                        </div>
+                                        <div class="col-md-6 mt-4">
+                                            <label for="" class="form-label">
+                                                Total Halaman
+                                            </label>
+                                            <input type="number" class="form-control" name="total_page">
+                                        </div>
+                                        <div class="col-md mt-4">
+                                            <label for="" class="form-label">
+                                                Kategori
+                                            </label>
+                                            <select class="form-select" aria-label="Default select example"
+                                                name="category_id">
+                                                @foreach ($kategori as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
 
-                        <div class="col-12 mt-3">
-                            <button class="btn btn-primary" type="submit">Tambah Buku Baru</button>
+                                        <div class="col-12 mt-3">
+                                            <button class="btn btn-primary" type="submit">Simpan Buku Baru</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
-                </form>
+                </div>
+
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#modalAddBuku">
+                    Tambah Buku Baru
+                </button>
             @endif
+
+            @include('pages.book.modal-filter')
+
+            <button type="button" class="btn btn-warning ms-3" data-bs-toggle="modal"
+                data-bs-target="#modalFilterBuku">
+                Filter
+            </button>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -226,6 +262,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+
+
 </body>
 
 </html>
